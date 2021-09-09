@@ -1,0 +1,30 @@
+{% extends 'lectures/base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+<h4>this is <b>{{stage}} stage</b> lectures</h4>
+
+<table class="table">
+<tr class="table-primary">
+
+<td class="table-primary">Title</td>
+<td class="table-primary">Link</td>
+
+</tr>
+
+
+    {%for lecture in lectures %}
+        <tr class="table-light">
+
+            <td class="table-light">{{lecture.name}}</td>
+            <td class="table-light"><a href="{% url 'lectures:lessons' lecture.stage lecture.name %}" class='btn btn-primary btn-sm'>Open</a></td>
+
+            </tr>
+
+    {% endfor %}
+
+
+</table>
+
+{% endblock content %}

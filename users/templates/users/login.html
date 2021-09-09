@@ -1,0 +1,18 @@
+{% extends 'lectures/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}login{% endblock title %}
+
+{% block content %}
+
+<h4>Login</h4>
+
+<form method="post" novalidate>
+    {%csrf_token%}
+    {{form|crispy}}
+<br>
+<button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+
+
+{% endblock content %}

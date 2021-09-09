@@ -1,0 +1,44 @@
+{% extends 'lectures/base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+ 
+{% if user.is_authenticated and not user.is_superuser%}
+
+    <h4>you are {{user.stage}} stage</h4>
+
+{%elif user.is_authenticated and user.is_superuser%}
+<br>
+{%else%}
+    <h4>wellcome student</h4>
+
+{%endif%}
+
+
+
+
+<table class="table">
+<tr class="table-primary">
+
+<td class="table-primary">Title</td>
+<td class="table-primary">Link</td>
+
+</tr>
+
+
+    {% for sta in stages%} 
+        <tr class="table-light">
+
+             <td class="table-light">{{sta}} stage</td>
+            <td class="table-light"><a href="{%url 'lectures:lectures' sta%}" class='btn btn-primary btn-sm'>open</a></td>
+
+            </tr>
+
+   {%endfor%} 
+
+
+ 
+
+</table>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends 'lectures/base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+<p><b>{{lecture}} lectures</b></p>
+
+<table class="table">
+<tr class="table-primary">
+
+<td class="table-primary">Title</td>
+<td class="table-primary">Link</td>
+<td class="table-primary">Uploaded</td>
+
+</tr>
+
+
+    {%for lesson in lessons%}
+        <tr class="table-light">
+
+            <td class="table-light">{{lesson.title}}</td>
+            <td class="table-light">{{lesson.uploaded}}</td>
+            <td class="table-light"><a href="/lectures{{lesson.upload.url}}" class='btn btn-primary btn-sm'>Open</a></td>
+            
+
+            </tr>
+
+    {% endfor %}
+
+
+</table>
+{% endblock content %}

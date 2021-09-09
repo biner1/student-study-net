@@ -1,0 +1,18 @@
+{% extends 'lectures/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+<p>Upload lecture</p>
+
+<form method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{form|crispy}}
+<br>
+<button type="submit" class="btn btn-primary">Upload</button>
+
+</form>
+
+
+{% endblock content %}

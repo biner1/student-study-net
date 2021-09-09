@@ -1,0 +1,78 @@
+{% extends 'lectures/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}register{% endblock title %}
+
+{% block content %}
+
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">{{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+         {% endfor %}
+</div>
+{% endif %}
+
+
+
+
+
+<form method="post" novalidate>
+
+    {%csrf_token%}
+    <fieldset>
+    
+    <!-- Form Name -->
+    <legend>Register a Moderator user</legend>
+    
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="fname">User Name*</label>  
+      <div class="col-md-4">
+      {{form.username}}
+      {{form.username.errors}}
+        
+      </div>
+    </div>
+    
+    <!-- password input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="password">password*</label>  
+      <div class="col-md-4">
+        {{form.password1}}
+        {{form.password1.errors}}
+      </div>
+    </div>
+    
+    <!-- password input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="password">Confirm Password*</label>  
+      <div class="col-md-4">
+        {{form.password2}}
+        {{form.password2.errors}}
+      </div>
+    </div>
+    
+
+    
+    <!-- stage input-->
+    <div class="col-md-2">
+        <label for="validationDefault04" class="form-label">Stage*</label>
+        <div>{{form.stage}}</div>
+        {{form.stage.errors}}
+    </div>
+
+    <!-- Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label"></label>
+      <div class="col-md-8">
+        <button type="submit" class="btn btn-success">Register</button>
+      </div>
+    </div>
+    
+    </fieldset>
+    </form>
+
+{% endblock content %}
