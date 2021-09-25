@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     
     'lectures.apps.LecturesConfig',
     'users.apps.UsersConfig',
+    'polls.apps.PollsConfig',
 
     'crispy_forms',
 

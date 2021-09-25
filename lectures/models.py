@@ -12,6 +12,7 @@ class StudentStage(models.Model):
 class Lectures(models.Model):
     name = models.CharField(max_length=200, blank=False)
     stage = models.ForeignKey(StudentStage, on_delete=models.CASCADE , blank=False, null=False)
+    vote_count = models.IntegerField(blank=True,null=True,default=0)
 
     def save(self, *args, **kwargs):
         

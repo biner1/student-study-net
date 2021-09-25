@@ -21,10 +21,11 @@ from lectures.views import home
 
 
 urlpatterns = [
+    path("",home,name="homed"),
     path('admin/', admin.site.urls),
     path("lectures/", include("lectures.urls")),
-    path("",home,name="homed"),
     path('accounts/',include('users.urls')),
+    path('poll/',include('polls.urls')),
 
 
 ]
