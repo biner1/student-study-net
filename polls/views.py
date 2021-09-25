@@ -37,3 +37,8 @@ def vote(request):
 
     else:
         return render(request, 'polls/vote.html', {'lectures':lects})
+
+
+def detail(request):
+    lects = Lectures.objects.all()
+    return render(request,'polls/vote-details.html',{'lectures':lects})

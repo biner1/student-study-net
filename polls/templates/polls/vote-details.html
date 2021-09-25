@@ -1,0 +1,29 @@
+{% extends 'lectures/base.html' %}
+{% block title %}Vote{% endblock title %}
+
+
+{% block content %}
+
+<h4>Vote For Lectures</h4>
+
+
+
+<table class="table">
+    <tr class="table-primary">
+
+        <td class="table-primary">Title</td>
+        <td class="table-primary">Votes</td>
+
+    </tr>
+            {%for lecture in lectures %}
+                <tr class="table-light">
+
+                    <td class="table-light">{{lecture.name}}</td>
+                    <td class="table-light">{{lecture.vote_count}} votes</td>
+
+                    </tr>
+
+            {% endfor %}
+</table>
+
+{% endblock content %}
