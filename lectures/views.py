@@ -29,7 +29,7 @@ def lessons(request,stage,les):
     return render(request, 'lectures/lessons.html',{'lessons':lessons,'lecture':les})
 
 
-@login_required(login_url='/lectures/')
+@login_required(login_url='/accounts/login/')
 def uploadLecture(request):
     if request.method == 'POST':
         form = LessonsForm(request.POST,request.FILES,user=request.user)

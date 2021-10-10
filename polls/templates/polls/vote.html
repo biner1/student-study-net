@@ -16,20 +16,20 @@
 
     </tr>
 
-    <form action="{%url 'polls:vote'%}" method="post">
-        {% csrf_token %} 
-
             {%for lecture in lectures %}
                 <tr class="table-light">
 
                     <td class="table-light">{{lecture.name}}</td>
-                    <td class="table-light"><input type="radio" name="choice" id="{{lecture.name}}" value="{{ lecture.id }}"> Check to Vote</td>
+                    {%if hasvoted %}
+                        <td class="table-light"><a class='btn btn-primary btn-sm' href="{%url 'polls:updatevote' lecture %}">Remove Vote</a></td>
+                    {%else%}
+                        <td class="table-light"><a class='btn btn-primary btn-sm' href="{%url 'polls:updatevote' lecture %}">Vote</a></td>
+
+                    {%endif%}
 
                     </tr>
 
             {% endfor %}
-        <input type="submit" value="vote">
-    </form>
     <a href="{%url 'polls:detail'%}">vote details</a>
 
 </table>
