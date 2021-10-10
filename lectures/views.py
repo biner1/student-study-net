@@ -6,12 +6,12 @@ from .models import *
 from .forms import LessonsForm
 
 
-def home(request):
+def home(request): # stage list
     stages=StudentStage.objects.all()
     return render(request, 'lectures/home.html',{'stages':stages})
 
     
-def lectures(request,stage):
+def lectures(request,stage): # lectures list
     try:
         lect=StudentStage.objects.get(stage=stage).lectures_set.all()
     except StudentStage.DoesNotExist:
@@ -19,7 +19,7 @@ def lectures(request,stage):
     return render(request,'lectures/lectures.html',{'stage':stage,'lectures':lect})
 
 
-def lessons(request,stage,les):
+def lessons(request,stage,les): # lessons list
     try:
         lessons=StudentStage.objects.get(stage=stage).lectures_set.get(name=les).lessons_set.all()
     except Lectures.DoesNotExist:

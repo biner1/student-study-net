@@ -8,21 +8,25 @@ from polls.models import LectureVote
 @login_required(login_url='/accounts/login/')
 def vote(request):
     user=request.user
-    lects = Lectures.objects.all()
+    if user.is_superuser: # super_user can see all lectures for voting
+        lects = Lectures.objects.all()
+    else: # Students can vote for lectures of their stage
+        lects = Lectures.objects.filter(stage=user.stage)
     has_voted = LectureVote.objects.filter(user=user).exists()
     
     return render(request, 'polls/vote.html', {'lectures':lects,'hasvoted':has_voted})
 
-
+# TODO: change Vote Count logic for more accurate counting
+    # if User has voted and was Deleted vote should be decremented
 @login_required(login_url='/accounts/login/')
-def updateVote(request,lecture):
+def updateVote(request,lecture): # voting endpoint
     lect = get_object_or_404(Lectures,name=lecture)
     lects = Lectures.objects.all()
 
     try:
         user = request.user
         has_voted = LectureVote.objects.filter(user=user).exists()
-
+    # TODO: fixing this try, except logic to if else
     except (KeyError, Lectures.DoesNotExist):
         return render(request, 'polls/vote.html', {
         'lectures':lects,
@@ -43,6 +47,6 @@ def updateVote(request,lecture):
         return redirect('polls:detail')
 
 
-def detail(request):
+def detail(request):  # show number of votes
     lects = Lectures.objects.all()
     return render(request,'polls/vote-details.html',{'lectures':lects})

@@ -30,10 +30,10 @@
                     </tr>
 
             {% endfor %}
-    <a href="{%url 'polls:detail'%}">vote details</a>
+    
 
 </table>
-
+<a class='btn btn-outline-primary' href="{%url 'polls:detail'%}">Vote Details</a>
 
 {% if error_message %}<p><strong>{{error_message }}</strong></p> {% endif %}
 {% endblock content %}
