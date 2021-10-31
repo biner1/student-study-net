@@ -22,11 +22,15 @@ from lectures.views import home
 
 urlpatterns = [
     path("",home,name="homed"),
+    path('accounts/',include('users.urls')),
     path('admin/', admin.site.urls),
     path("lectures/", include("lectures.urls")),
-    path('accounts/',include('users.urls')),
+   
     path('poll/',include('polls.urls')),
 
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

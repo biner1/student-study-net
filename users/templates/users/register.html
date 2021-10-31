@@ -8,7 +8,7 @@
 {% if messages %}
 <div class="messages">
     {% for message in messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">{{message}}
+    <div class="col-xs-11 col-sm-4 alert alert-success alert-dismissible fade show" role="alert">{{message}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
          {% endfor %}
@@ -64,6 +64,13 @@
         {{form.stage.errors}}
     </div>
 
+     <!-- Permissions input-->
+     <div class="col-md-2">
+      <label for="validationDefault04" class="form-label">Permissions*</label>
+      <div>{{form.permissions}}</div>
+      {{form.permissions.errors}}
+    </div>
+
     <!-- Button -->
     <div class="form-group">
       <label class="col-md-4 control-label"></label>
@@ -71,6 +78,8 @@
         <button type="submit" class="btn btn-success">Register</button>
       </div>
     </div>
+
+    
     
     </fieldset>
     </form>

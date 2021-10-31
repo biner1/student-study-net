@@ -1,0 +1,42 @@
+{% extends 'lectures/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="col-xs-11 col-sm-5 alert alert-success alert-dismissible fade show" role="alert">{{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+         {% endfor %}
+</div>
+{% endif %}
+
+
+
+<div class="content-section">
+    <div class="media">
+    <img class="rounded-circle account-img" src="{{user.profile.image.url}}">
+    <div class="media-body">
+        
+        <h2 class="account-heading">{{user.username}}</h2>
+        <p class="text-secondary">{{user.email}}</p>
+    </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Update Profile Picture</legend>
+            {{p_form|crispy}}
+           
+            <div class="form-group mt-2">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </fieldset>
+    </form>
+
+
+{% endblock content %}
