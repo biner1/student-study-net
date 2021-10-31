@@ -5,6 +5,7 @@ from .models import LectureVote
 from lectures.models import Lectures
 from polls.models import LectureVote
 
+
 @login_required(login_url='/accounts/login/')
 def vote(request):
     user=request.user
@@ -16,8 +17,10 @@ def vote(request):
     
     return render(request, 'polls/vote.html', {'lectures':lects,'hasvoted':has_voted})
 
+
 # TODO: change Vote Count logic for more accurate counting
     # if User has voted and was Deleted vote should be decremented
+    # maybe use signals to update vote count
 @login_required(login_url='/accounts/login/')
 def updateVote(request,lecture): # voting endpoint
     lect = get_object_or_404(Lectures,name=lecture)
@@ -46,7 +49,10 @@ def updateVote(request,lecture): # voting endpoint
             vote.save()
         return redirect('polls:detail')
 
-
-def detail(request):  # show number of votes
-    lects = Lectures.objects.all()
+@login_required(login_url='/accounts/login/')
+def detail(request):  # show vote detail
+    if request.user.is_superuser: # super_user can see all lectures for voting
+        lects = Lectures.objects.all()
+    else: # Students can vote for lectures of their stage
+        lects = Lectures.objects.filter(stage=request.user.stage)
     return render(request,'polls/vote-details.html',{'lectures':lects})

@@ -31,11 +31,14 @@ def lessons(request,stage,les): # lessons list
 
 @login_required(login_url='/accounts/login/')
 def uploadLecture(request):
-    if request.method == 'POST':
-        form = LessonsForm(request.POST,request.FILES,user=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('lectures:home')
+    if request.user.permissions == 'uploader':
+        if request.method == 'POST':
+            form = LessonsForm(request.POST,request.FILES,user=request.user)
+            if form.is_valid():
+                form.save()
+                return redirect('lectures:home')
+        else:
+            form = LessonsForm(user=request.user)
+        return render(request,'lectures/upload.html',{'form': form})
     else:
-        form = LessonsForm(user=request.user)
-    return render(request,'lectures/upload.html',{'form': form})
+        return redirect('lectures:home')     # TODO: if not is uploader return 404 response
