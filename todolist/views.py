@@ -68,7 +68,7 @@ def deleteTask(request,pk):
 
     return redirect('todolist:viewToDo',pk=lsId)
 
-
+@login_required(login_url='/accounts/login/')
 def deleteTodoList(request,pk):
 
     list=get_object_or_404(ToDoList,id=pk,user=request.user)
