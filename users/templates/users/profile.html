@@ -18,12 +18,11 @@
 
 <div class="content-section">
     <div class="media">
-    <img class="rounded-circle account-img" src="{{user.profile.image.url}}">
-    <div class="media-body">
-        
-        <h2 class="account-heading">{{user.username}}</h2>
-        <p class="text-secondary">{{user.email}}</p>
-    </div>
+        <img class="rounded-circle account-img" src="{{user.profile.image.url}}" width="180px" hight="18    0px">
+        <div class="media-body">  
+            <h2 class="account-heading">{{user.username}}</h2>
+            <p class="text-secondary">{{user.email}}</p>
+        </div>
     </div>
 
     <form method="post" enctype="multipart/form-data">
@@ -37,6 +36,11 @@
             </div>
         </fieldset>
     </form>
+</div>
 
+<div class="mt-4">
+    <a href="{%url 'todolist:toDoList'%}" class='btn btn-primary btn-sm'>View My ToDo List</a>
+<div>
 
+    
 {% endblock content %}

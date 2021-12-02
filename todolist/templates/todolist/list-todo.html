@@ -1,0 +1,60 @@
+{% extends 'lectures/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}ToDo lists{% endblock title %}
+
+{% block content %}
+ 
+{% if user.is_authenticated and not user.is_superuser%}
+
+    <h4>you are {{user.stage}} stage</h4>
+
+{%elif user.is_authenticated and user.is_superuser%}
+<br>
+{%else%}
+    <h4>wellcome student</h4>
+
+{%endif%}
+
+
+
+
+<table class="table">
+    <tr class="table-primary">
+
+        <td class="table-primary">ToDo List</td>
+        <td class="table-primary">Created</td>
+        <td class="table-primary">Delete</td>
+
+
+    </tr>
+
+    {% for item in list%} 
+        <tr class="table-light">
+
+            <td class="table-light"><a href="{%url 'todolist:viewToDo' item.id %}" class='btn btn-outline-primary btn-sm'>{{item.name}}</a></td>
+            <td class="table-light">{{item.created}}</td>
+            <td><a href="{%url 'todolist:deleteToDoList' item.id%}" class='btn btn-danger btn-sm'>Delete</a><td>
+
+        </tr>
+
+   {%endfor%} 
+ 
+</table>
+
+
+<form method="post" novalidate>
+    {%csrf_token%}
+    
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="name">Name*</label>  
+        <div class="col-md-4">
+          {{form.name}}
+          <p>{{form.name.errors}}</p>
+        </div>
+      </div>
+
+    <button type="submit" class="btn btn-primary mt-1">Create ToDo</button>
+</form>
+
+
+{% endblock content %}
