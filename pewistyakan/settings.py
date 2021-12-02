@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     'lectures.apps.LecturesConfig',
     'users.apps.UsersConfig',
     'polls.apps.PollsConfig',
+    'todolist.apps.TodolistConfig',
     
     'imagekit',
     'crispy_forms',
+
     
 
 

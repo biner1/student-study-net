@@ -1,0 +1,54 @@
+{% extends 'lectures/base.html' %}
+{% block title %}List Tasks{% endblock title %}
+
+{% block content %}
+
+
+      <div class="card text-white bg-primary mb-2" style="width: 20rem;">
+
+          <div class="card-header">
+            {{list.name}}
+          </div>
+
+            
+                <ul class="list-group list-group-flush">
+
+                  {% for item in list.item_set.all %}
+                        {%if item.complete == True %}
+
+                          <li class="list-group-item"><input type="checkbox" value="clicked" name="c{{item.id}}"checked disabled>
+                            <a href="{%url 'todolist:toggleDone' item.id %}" class="link-dark"><label><del>{{item.text}}</del></label></a>
+
+                            <a href="{%url 'todolist:deleteTask' item.id %}" style="float:right"><button type="button" class="btn-close" aria-label="Close"></button></a></del>
+                          </li>
+
+                        {% else %}
+
+                          <li class="list-group-item"><input type="checkbox" value="clicked" name="c{{item.id}}" disabled>
+                            <a href="{%url 'todolist:toggleDone' item.id %}" class="link-dark"><label>{{item.text}}</label></a>
+
+                            <a href="{%url 'todolist:deleteTask' item.id %}" style="float:right"><button type="button" class="btn-close" aria-label="Close"></button></a>
+                          </li>
+
+                        {% endif %}
+                    {% endfor %}
+
+                  </ul>
+                  
+              <form method="post" action="{% url 'todolist:addTask' list.id %}">
+                  {% csrf_token %}
+
+                    <li class="list-group-item"><input type="text" name="new" placeholder="write an item name"> 
+                    <button type="submit" class="btn btn-outline-info mt-1" name="newItem" value="newItem">Add task</button></li> 
+
+              </form>
+
+             
+
+        </div>
+        <!-- end of card div -->
+
+          <a class='btn btn-outline-primary' href="{%url 'todolist:toDoList'%}">View yout toDo Lists</a>
+    
+
+{%endblock content%}

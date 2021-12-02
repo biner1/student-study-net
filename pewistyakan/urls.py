@@ -27,6 +27,7 @@ urlpatterns = [
     path("lectures/", include("lectures.urls")),
    
     path('poll/',include('polls.urls')),
+    path('todo/',include('todolist.urls')),
 
 
 ]
