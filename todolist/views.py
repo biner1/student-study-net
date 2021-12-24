@@ -32,11 +32,10 @@ def viewToDo(request,pk):
 def toggleDone(request,pk):
 
     user=request.user
-    list=ToDoList.objects.get(id=1,user=user)
 
     task=get_object_or_404(Item,id=pk)
     
-    if task.todolist.user == request.user:
+    if task.todolist.user == user:
         task.complete=not task.complete
         task.save()
         lsId=task.todolist.id

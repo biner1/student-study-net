@@ -19,6 +19,8 @@ class Lectures(models.Model):
         self.name = slugify(self.name)
         super(Lectures, self).save(*args, **kwargs)
 
+        
+
     def __str__(self):
         return self.name
 
