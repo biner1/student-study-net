@@ -20,7 +20,7 @@ def vote(request):
 
 
 @login_required(login_url='/accounts/login/')
-def updateVote(request,lecture): # voting endpoint
+def update_vote(request,lecture): # voting endpoint
     lect = get_object_or_404(Lectures,name=lecture)
 
     user = request.user
@@ -30,21 +30,18 @@ def updateVote(request,lecture): # voting endpoint
         vLect = LectureVote.objects.get(user=user).lecture
         vote = LectureVote.objects.get(user=user,lecture=vLect)
         vote.delete()
-        vLect.vote_count=LectureVote.objects.filter(lecture=vLect).count()
-        vLect.save()
         
     else:
         vote=LectureVote.objects.create(user=user,lecture=lect)
         vote.save()
-        lect.vote_count=LectureVote.objects.filter(lecture=lect).count()
-        lect.save()
         
     return redirect('polls:detail')
 
 @login_required(login_url='/accounts/login/')
-def detail(request):  # show vote detail
+def vote_detail(request):  # show vote detail
     if request.user.is_superuser: # super_user can see all lectures for voting
-        lects = Lectures.objects.all()
+        lectures = Lectures.objects.all()
     else: # Students can vote for lectures of their stage
-        lects = Lectures.objects.filter(stage=request.user.stage)
-    return render(request,'polls/vote-details.html',{'lectures':lects})
+        lectures = Lectures.objects.filter(stage=request.user.stage)
+    return render(request,'polls/vote-details.html',{'lectures':lectures})
+

@@ -14,32 +14,49 @@
 
 {%endif%}
 
-
-
-
 <table class="table">
-<tr class="table-primary">
+    <tr class="table-primary">
 
-<td class="table-primary">Title</td>
-<td class="table-primary">Link</td>
+        <td class="table-primary">Title</td>
+        <td class="table-primary">Action</td>
+        {% if user.is_authenticated and user.is_superuser%}
+        <td class="table-primary"></td>
+        {%endif%}
 
-</tr>
+    </tr>
 
-
-    {% for sta in stages%} 
+    {% for stage in stages%} 
         <tr class="table-light">
 
-             <td class="table-light">{{sta}} stage</td>
-            <td class="table-light"><a href="{%url 'lectures:lectures' sta%}" class='btn btn-primary btn-sm'>open</a></td>
-
+            <td class="table-light">{{stage}} stage</td>
+            <td class="table-light"><a href="{%url 'lectures:view_lectures' stage%}" class='btn btn-primary btn-sm'>open</a></td>
+            {% if user.is_authenticated and user.is_superuser%}
+                <td class="table-light"><a href="{% url 'lectures:delete_stg' stage%}" class='btn btn-danger btn-sm'>Delete</a></td>
+            {%endif%}
             </tr>
 
-   {%endfor%} 
-
-
- 
+   {%endfor%}
 
 </table>
+
+{% if user.is_authenticated and user.is_superuser%}
+    {% comment %} only the super user can create Stages {% endcomment %}
+    <form method="post" action="{%url 'lectures:add_stage'%}" novalidate>
+        {%csrf_token%}
+        
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="name">Name*</label>
+            <div class="col-md-4">
+            {{form.stage}}
+            <p>{{form.stage.errors}}</p>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-1">Add Stage</button>
+        
+    </form>
+
+{%endif%}
 
 
 {% endblock content %}
