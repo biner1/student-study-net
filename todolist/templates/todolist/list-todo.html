@@ -41,14 +41,13 @@
  
 </table>
 
-
 <form method="post" novalidate>
     {%csrf_token%}
     
     <div class="form-group">
         <label class="col-md-4 control-label" for="name">Name*</label>  
         <div class="col-md-4">
-          {{form.name}}
+             {{form.name}}
           <p>{{form.name.errors}}</p>
         </div>
       </div>

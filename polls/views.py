@@ -19,41 +19,29 @@ def vote(request):
     return render(request, 'polls/vote.html', {'lectures':lects,'hasvoted':has_voted})
 
 
-# TODO: change Vote Count logic for more accurate counting
-    # if User has voted and was Deleted vote should be decremented
-    # maybe use signals to update vote count
 @login_required(login_url='/accounts/login/')
-def updateVote(request,lecture): # voting endpoint
+def update_vote(request,lecture): # voting endpoint
     lect = get_object_or_404(Lectures,name=lecture)
-    lects = Lectures.objects.all()
 
-    try:
-        user = request.user
-        has_voted = LectureVote.objects.filter(user=user).exists()
-    # TODO: fixing this try, except logic to if else
-    except (KeyError, Lectures.DoesNotExist):
-        return render(request, 'polls/vote.html', {
-        'lectures':lects,
-        'error_message': "You didnt selct a choice",
-    })
+    user = request.user
+    has_voted = LectureVote.objects.filter(user=user).exists()
+
+    if has_voted: # if user has voted remove vote
+        vLect = LectureVote.objects.get(user=user).lecture
+        vote = LectureVote.objects.get(user=user,lecture=vLect)
+        vote.delete()
+        
     else:
-        if has_voted: # if user has voted remove vote
-            vLect = LectureVote.objects.get(user=user).lecture
-            vote = LectureVote.objects.get(user=user,lecture=vLect)
-            vLect.vote_count-=1
-            vLect.save()
-            vote.delete()
-        else:
-            vote=LectureVote.objects.create(user=user,lecture=lect)
-            lect.vote_count+=1
-            lect.save()
-            vote.save()
-        return redirect('polls:detail')
+        vote=LectureVote.objects.create(user=user,lecture=lect)
+        vote.save()
+        
+    return redirect('polls:detail')
 
 @login_required(login_url='/accounts/login/')
-def detail(request):  # show vote detail
+def vote_detail(request):  # show vote detail
     if request.user.is_superuser: # super_user can see all lectures for voting
-        lects = Lectures.objects.all()
+        lectures = Lectures.objects.all()
     else: # Students can vote for lectures of their stage
-        lects = Lectures.objects.filter(stage=request.user.stage)
-    return render(request,'polls/vote-details.html',{'lectures':lects})
+        lectures = Lectures.objects.filter(stage=request.user.stage)
+    return render(request,'polls/vote-details.html',{'lectures':lectures})
+

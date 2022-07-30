@@ -9,7 +9,6 @@ from .models import ToDoList, Item
 def toDoList(request):
     if request.method=="POST":
         form=createNewListForm(request.POST)
-        
         if form.is_valid():
             name=form.cleaned_data['name']
             ToDoList.objects.create(name=name,user=request.user)
@@ -32,11 +31,10 @@ def viewToDo(request,pk):
 def toggleDone(request,pk):
 
     user=request.user
-    list=ToDoList.objects.get(id=1,user=user)
 
     task=get_object_or_404(Item,id=pk)
     
-    if task.todolist.user == request.user:
+    if task.todolist.user == user:
         task.complete=not task.complete
         task.save()
         lsId=task.todolist.id
@@ -62,11 +60,13 @@ def addTask(request,pk):
 @login_required(login_url='/accounts/login/')
 def deleteTask(request,pk):
 
-    task=get_object_or_404(Item,id=pk)
-    lsId=task.todolist.id
-    task.delete()
-
-    return redirect('todolist:viewToDo',pk=lsId)
+    task=get_object_or_404(Item,id=pk,)
+    listId=task.todolist.id
+    if request.user == task.todolist.user:
+        task.delete()
+        return redirect('todolist:viewToDo',pk=listId)
+        
+    return redirect('todolist:toDoList',)
 
 @login_required(login_url='/accounts/login/')
 def deleteTodoList(request,pk):

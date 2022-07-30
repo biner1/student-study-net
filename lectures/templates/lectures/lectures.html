@@ -1,17 +1,20 @@
 {% extends 'lectures/base.html' %}
-{% block title %}Home{% endblock title %}
+{% block title %}lectures{% endblock title %}
 
 {% block content %}
 
 <h4>this is <b>{{stage}} stage</b> lectures</h4>
 
 <table class="table">
-<tr class="table-primary">
+    <tr class="table-primary">
 
-<td class="table-primary">Title</td>
-<td class="table-primary">Link</td>
+        <td class="table-primary">Title</td>
+        <td class="table-primary">Actions</td>
+        {% if user.is_authenticated and user.is_superuser%}
+            <td class="table-primary"></td>
+        {%endif%}
 
-</tr>
+    </tr>
 
 
     {%for lecture in lectures %}
@@ -19,12 +22,32 @@
 
             <td class="table-light">{{lecture.name}}</td>
             <td class="table-light"><a href="{% url 'lectures:lessons' lecture.stage lecture.name %}" class='btn btn-primary btn-sm'>Open</a></td>
-
+            {% if user.is_authenticated and user.is_superuser%}
+                <td class="table-light"><a href="{% url 'lectures:delete_lect' lecture.stage lecture.name %}" class='btn btn-danger btn-sm'>Delete</a></td>
+            {%endif%}
             </tr>
 
     {% endfor %}
 
 
 </table>
+
+{% if user.is_authenticated and user.is_superuser%}
+    {% comment %} only the super user can create Lectures {% endcomment %}
+    <form method="post" action="{%url 'lectures:add_lecture' stage%}" novalidate>
+        {%csrf_token%}
+        
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="name">Name*</label>
+            <div class="col-md-4">
+            {{form.name}}
+            <p>{{form.name.errors}}</p>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-1">Add Lectures</button>
+    </form>
+
+{%endif%}
 
 {% endblock content %}

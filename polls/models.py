@@ -5,7 +5,7 @@ from users.models import CustomUser
 class LectureVote(models.Model):
 
 
-    lecture = models.ForeignKey(Lectures, on_delete=models.CASCADE,null=True)
+    lecture = models.ForeignKey(Lectures, on_delete=models.CASCADE,related_name='lecturesv',null=True)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
    
     def __str__(self):

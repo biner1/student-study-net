@@ -13,10 +13,7 @@ class CustomUserAdmin(UserAdmin):
         (
             'User role',
             {
-                'fields':(
-                    'stage',
-                    'permissions',
-                )
+                'fields':('stage','permissions')
             }
         )
 

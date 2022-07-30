@@ -10,8 +10,10 @@
 
         <td class="table-primary">Title</td>
         <td class="table-primary">Uploaded</td>
-        <td class="table-primary">Link</td>
-
+        <td class="table-primary">Action</td>
+        {% if user.is_authenticated and user.is_superuser%}
+        <td class="table-primary"></td>
+        {%endif%}
 
     </tr>
 
@@ -21,7 +23,9 @@
             <td class="table-light">{{lesson.title}}</td>
             <td class="table-light">{{lesson.uploaded}}</td>
             <td class="table-light"><a href="/lectures{{lesson.upload.url}}" class='btn btn-primary btn-sm'>Open</a></td>
-            
+            {% if user.is_authenticated and user.is_superuser%}
+                <td class="table-light"><a href="{% url 'lectures:delete_lesson' lesson.lectures lesson.title %}" class='btn btn-danger btn-sm'>Delete</a></td>
+            {%endif%}
         </tr>
 
     {% endfor %}

@@ -3,11 +3,11 @@ from .models import ToDoList, Item
 
 
 class AdminToDoList(admin.ModelAdmin):
-    list_display =("name","user")
+    list_display =("name","user","created")
     list_filter = ("user",)
 
 class AdminItem(admin.ModelAdmin):
-    list_display = ("todolist", "text")
+    list_display = ("todolist", "text","started")
     list_filter = ("todolist",)
 
 admin.site.register(ToDoList,AdminToDoList)

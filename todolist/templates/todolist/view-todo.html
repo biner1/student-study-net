@@ -18,14 +18,15 @@
 
                           <li class="list-group-item"><input type="checkbox" value="clicked" name="c{{item.id}}"checked disabled>
                             <a href="{%url 'todolist:toggleDone' item.id %}" class="link-dark"><label><del>{{item.text}}</del></label></a>
-
+                       
                             <a href="{%url 'todolist:deleteTask' item.id %}" style="float:right"><button type="button" class="btn-close" aria-label="Close"></button></a></del>
                           </li>
 
                         {% else %}
 
                           <li class="list-group-item"><input type="checkbox" value="clicked" name="c{{item.id}}" disabled>
-                            <a href="{%url 'todolist:toggleDone' item.id %}" class="link-dark"><label>{{item.text}}</label></a>
+                            <a href="{%url 'todolist:toggleDone' item.id %}" class="link-dark"><label>{{item.text}} {{item.created}}</label></a>
+
 
                             <a href="{%url 'todolist:deleteTask' item.id %}" style="float:right"><button type="button" class="btn-close" aria-label="Close"></button></a>
                           </li>

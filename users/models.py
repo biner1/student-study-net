@@ -6,7 +6,7 @@ from imagekit.processors import ResizeToFill
 
 from lectures.models import StudentStage
 
-# Create your models here.
+
 CHOICES=(
     ("uploader","uploader"), 
     ("student","student"),

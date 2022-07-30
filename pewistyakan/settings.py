@@ -15,6 +15,8 @@ import os
 import django_heroku
 from django_heroku.core import settings
 
+from distutils.util import strtobool
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG',default='False')
+DEBUG = strtobool(os.getenv("DEBUG", "true"))
 
 ALLOWED_HOSTS = ['uni-net.herokuapp.com']
 
